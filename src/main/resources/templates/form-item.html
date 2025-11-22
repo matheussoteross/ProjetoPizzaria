@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${item.id == null ? 'Novo Item do Cardápio' : 'Editar Item do Cardápio'}"></title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        .container { max-width: 700px; margin: 40px auto; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h1 { color: #d9534f; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; }
+        .form-control { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        .btn-action { background-color: #5cb85c; color: white; padding: 10px 15px; text-decoration: none; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-right: 10px; }
+        .btn-action:hover { background-color: #4cae4c; }
+        .btn-cancel { background-color: #6c757d; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; }
+        .error-message { color: #d9534f; font-size: 0.9em; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            <span th:text="${item.id == null ? 'Criar Novo Item' : 'Editar Item'}"></span>
+        </h1>
+
+        <!-- O formulário envia para a rota POST /admin/itens/salvar -->
+        <form th:action="@{${action}}" th:object="${item}" method="post">
+            
+            <!-- Campo oculto para o ID (necessário para Edição) -->
+            <input type="hidden" th:field="*{id}">
+
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <!-- th:field mapeia o campo do HTML para o atributo 'nome' do objeto CardapioItem -->
+                <input type="text" id="nome" th:field="*{nome}" class="form-control" required>
+                <!-- Exibir erro de validação (se fosse implementado) -->
+                <!-- <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="error-message"></span> -->
+            </div>
+            
+            <div class="form-group">
+                <label for="descricao">Descrição:</label>
+                <textarea id="descricao" th:field="*{descricao}" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="preco">Preço (R$):</label>
+                <input type="number" id="preco" th:field="*{preco}" class="form-control" step="0.01" required>
+            </div>
+
+            <div class="form-group">
+                <label for="categoria">Categoria:</label>
+                <!-- Exemplo de lista fixa de categorias -->
+                <select id="categoria" th:field="*{categoria}" class="form-control" required>
+                    <option value="">-- Selecione uma Categoria --</option>
+                    <option value="Pizza Salgada">Pizza Salgada</option>
+                    <option value="Pizza Doce">Pizza Doce</option>
+                    <option value="Bebida">Bebida</option>
+                    <option value="Sobremesa">Sobremesa</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-action" th:text="${item.id == null ? 'Criar Item' : 'Salvar Edição'}"></button>
+            <a th:href="@{/admin/itens}" class="btn-cancel">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>

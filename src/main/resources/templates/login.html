@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizzaria - Login</title>
+    <!-- Incluir CSS (assumindo que você criará um arquivo em static/css/style.css) -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        /* Estilos básicos para centralizar e estilizar o formulário */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .login-container h1 {
+            color: #d9534f; /* Vermelho/Tomate - Destaque da Pizzaria */
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box; 
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+        .form-control:focus {
+            border-color: #d9534f;
+            outline: none;
+        }
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background-color: #5cb85c; /* Verde - Botão de Ação */
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .btn-login:hover {
+            background-color: #4cae4c;
+        }
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-align: left;
+        }
+        .alert-error {
+            background-color: #f8d7da; /* Fundo Rosa Claro */
+            color: #721c24; /* Texto Vermelho Escuro */
+            border: 1px solid #f5c6cb;
+        }
+        .alert-success {
+            background-color: #d4edda; /* Fundo Verde Claro */
+            color: #155724; /* Texto Verde Escuro */
+            border: 1px solid #c3e6cb;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h1>Login - Projeto Pizzaria</h1>
+
+        <!-- Bloco de ERRO de Login (th:if="${param.error}" é o padrão do Spring Security) -->
+        <div th:if="${param.error}" class="alert alert-error">
+            <p>Ocorreu um erro ao tentar fazer login. Usuário ou senha inválidos. Tente novamente.</p>
+        </div>
+        
+        <!-- Bloco de LOGOUT bem-sucedido (th:if="${param.logout}" é o padrão do Spring Security) -->
+        <div th:if="${param.logout}" class="alert alert-success">
+            <p>Você foi desconectado com sucesso.</p>
+        </div>
+
+        <!-- Formulário de Login -->
+        <form th:action="@{/login}" method="post">
+            
+            <div class="form-group">
+                <label for="username">Usuário (E-mail):</label>
+                <!-- Nome do campo DEVE ser 'username' para o Spring Security -->
+                <input type="text" id="username" name="username" class="form-control" placeholder="admin@pizzaria.com ou user@pizzaria.com" required autofocus>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Senha:</label>
+                <!-- Nome do campo DEVE ser 'password' para o Spring Security -->
+                <input type="password" id="password" name="password" class="form-control" placeholder="123456" required>
+            </div>
+            
+            <button type="submit" class="btn-login">Entrar</button>
+        </form>
+        
+        <p style="margin-top: 25px; font-size: 0.85em; color: #666;">
+            Lembrete: As credenciais de teste são: **admin@pizzaria.com** ou **user@pizzaria.com**, com a senha **123456** para ambos.
+        </p>
+
+    </div>
+
+</body>
+</html>

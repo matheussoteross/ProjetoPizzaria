@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Cardápio</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        .container { max-width: 1100px; margin: 40px auto; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h1 { color: #d9534f; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .btn-new { background-color: #5cb85c; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-bottom: 20px; display: inline-block; }
+        .btn-new:hover { background-color: #4cae4c; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:hover { background-color: #f5f5f5; }
+        .action-link { color: #007bff; text-decoration: none; margin-right: 10px; }
+        .delete-link { color: #d9534f; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Menu/Navegação Simples -->
+        <p><a th:href="@{/app/dashboard}" class="action-link" style="color: #007bff;">&larr; Voltar para o Dashboard</a> | Logado como: <span sec:authentication="name"></span></p>
+
+        <h1>🍕 Gerenciar Cardápio (Itens: Pizza, Bebidas, etc.)</h1>
+
+        <!-- Link para a página de Criação (CRUD - Create) -->
+        <a th:href="@{/admin/itens/novo}" class="btn-new">Adicionar Novo Item</a>
+
+        <div th:if="${itens.isEmpty()}">
+            <p>O cardápio está vazio. Adicione um novo item!</p>
+        </div>
+
+        <table th:unless="${itens.isEmpty()}">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                    <th>Descrição</th>
+                    <th>Preço</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Iteração sobre a lista de itens do cardápio (CardapioItem) -->
+                <tr th:each="item : ${itens}">
+                    <td th:text="${item.id}">1</td>
+                    <td th:text="${item.nome}">Pizza Clássica</td>
+                    <td th:text="${item.categoria}">Pizza Salgada</td>
+                    <td th:text="${item.descricao}">Molho de tomate, queijo e orégano</td>
+                    <td th:text="'R$ ' + ${#numbers.formatDecimal(item.preco, 1, 2)}">R$ 45.00</td>
+                    <td>
+                        <!-- Link de Edição (CRUD - Update) -->
+                        <a th:href="@{/admin/itens/editar/{id}(id=${item.id})}" class="action-link">Editar</a>
+                        
+                        <!-- Link de Remoção (CRUD - Delete) -->
+                        <!-- Adicionado JavaScript simples para confirmação -->
+                        <a th:href="@{/admin/itens/remover/{id}(id=${item.id})}" 
+                           onclick="return confirm('Tem certeza que deseja remover este item? Esta ação é irreversível.');"
+                           class="action-link delete-link">Remover</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

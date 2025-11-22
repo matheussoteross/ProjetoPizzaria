@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f8f9fa; }
+        .container { max-width: 900px; margin: 40px auto; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { color: #d9534f; }
+        .menu-link { display: inline-block; padding: 10px 15px; margin: 10px 5px; background-color: #5cb85c; color: white; text-decoration: none; border-radius: 5px; transition: background-color 0.3s; }
+        .menu-link:hover { background-color: #4cae4c; }
+        .logout-link { color: #d9534f; text-decoration: none; margin-left: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bem-vindo à Área Restrita da Pizzaria!</h1>
+        <p>Olá, <span sec:authentication="name">Usuário</span>. Você tem acesso aos seguintes módulos:</p>
+        
+        <!-- Link de Gerenciamento (APENAS ADMINS veem) -->
+        <div sec:authorize="hasRole('ADMIN')">
+            <h2>Gerenciamento (Apenas Admin)</h2>
+            <a th:href="@{/admin/itens}" class="menu-link">Gerenciar Cardápio (CRUD)</a>
+        </div>
+
+        <!-- Conteúdo Comum (USER e ADMIN veem) -->
+        <h2>Cardápio Público (Exemplo)</h2>
+        <p>Aqui você poderia visualizar o cardápio ou fazer pedidos, se fosse um usuário comum.</p>
+
+        <a th:href="@{/}" class="menu-link" style="background-color: #007bff;">Voltar à Página Inicial</a>
+        
+        <!-- Botão de Logout -->
+        <a th:href="@{/logout}" class="logout-link">Sair</a>
+    </div>
+</body>
+</html>
