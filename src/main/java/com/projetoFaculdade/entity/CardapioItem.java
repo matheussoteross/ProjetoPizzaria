@@ -3,7 +3,8 @@ package com.projetoFaculdade.entity;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 
-@Entity
+// CORREÇÃO: Define um nome de entidade explícito para evitar conflito com o Repository
+@Entity(name = "Item") 
 @Table(name = "itens_cardapio")
 public class CardapioItem {
     
@@ -34,7 +35,7 @@ public class CardapioItem {
         this.categoria = categoria;
     }
 
-    // --- GETTERS (RESOLVE OS ERROS NO CONTROLLER/SERVICE) ---
+    // --- GETTERS ---
     public Long getId() {
         return id;
     }
@@ -55,7 +56,7 @@ public class CardapioItem {
         return categoria;
     }
 
-    // --- SETTERS (ESSENCIAIS PARA O UPDATE NO CONTROLLER/SERVICE) ---
+    // --- SETTERS ---
     public void setId(Long id) {
         this.id = id;
     }
