@@ -176,12 +176,10 @@ curl -X POST http://localhost:8080/api/itens \
 
 12. Links de Entrega
 
-Repositório GitHub: [PREENCHER O LINK AQUI]
-
-Vídeo YouTube (até 7 min): [PREENCHER O LINK AQUI]
-
+Repositório GitHub: https://github.com/matheussoteross/ProjetoPizzaria
 13. Autores
-
+Matheus Sotero Tenorio dos Santos	3025102324
+Cauã Olivare Leandro	3025101217
 [SEU NOME COMPLETO] — RA [SEU RA]
 
 [NOME DO SEU PARCEIRO (se houver)] — RA [RA DO PARCEIRO]
